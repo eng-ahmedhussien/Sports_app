@@ -13,9 +13,13 @@ import UIKit
 class NetworkManger:SportsApi{
     
     
+ 
     var arrayofSports = [Sport]()
     var arrayofleagus = [League]()
     var arrayofTeams = [Team]()
+    var arrayofDicTeams = [[String: String?]]()
+    var arrayofEvents = [[String: String?]]()
+    var arrayofLastEvents = [Event]()
     
     //MARK: allSports
     func allSports(url: String, completion: @escaping (([Sport]?, Error?) -> Void)) {
@@ -39,7 +43,6 @@ class NetworkManger:SportsApi{
             }
         }
     }
-    //  addActivityIndicator()
     //MARK: allLeagues
     public func allLeaguesAPI(url: String , completion: @escaping ([League]? , Error?)->Void) {
         Alamofire.request(url).validate().responseJSON { response in
@@ -61,7 +64,6 @@ class NetworkManger:SportsApi{
         }
         
     }
-    
     //MARK: allTeams
     func allTeams(url: String, completion: @escaping (([Team]?, Error?) -> Void)) {
         Alamofire.request(url).validate().responseJSON { response in
@@ -82,5 +84,77 @@ class NetworkManger:SportsApi{
             }
         }
     }
+    //MARK: UpcomingEvents
+    func UpcomingEvents(url: String, completion: @escaping (([[String : String?]]?, Error?) -> Void)) {
+        Alamofire.request(url).validate().responseJSON { response in
+            if response.result.isSuccess
+            {
+                if let data = response.data{
+                    let decoder = JSONDecoder()
+                    let decodedArray = try? decoder.decode(Upcoming.self, from: data)
+                    self.arrayofEvents = decodedArray!.events
+                    // print(self.decodedSports.count)
+                    completion(self.arrayofEvents,nil)
+                }else{
+                    print("No Data")
+                    return
+                }
+            }else{
+                print("error \(String(describing:response.result.error))")
+            }
+        }
+    }
+    //MARK: dictionaryTeam
+    func dictionaryTeam(url: String, completion: @escaping (([[String : String?]]?, Error?) -> Void)) {
+        Alamofire.request(url).validate().responseJSON { response in
+            if response.result.isSuccess
+            {
+                if let data = response.data{
+                    let decoder = JSONDecoder()
+                    let decodedArray = try? decoder.decode(DictionaryTeam.self, from: data)
+                    self.arrayofDicTeams = decodedArray!.teams
+                    // print(self.decodedSports.count)
+                    completion(self.arrayofDicTeams,nil)
+                }else{
+                    print("No Data")
+                    return
+                }
+            }else{
+                print("error \(String(describing:response.result.error))")
+            }
+        }
+    }
+    //MARK: lastEvents
+    func lastEvents(url: String, completion: @escaping (([Event]?, Error?) -> Void)) {
+        Alamofire.request(url).validate().responseJSON { response in
+            if response.result.isSuccess
+            {
+                if let data = response.data{
+                    let decoder = JSONDecoder()
+                    let decodedArray = try? decoder.decode(Welcome.self, from: data)
+                    if let  decodedArray = decodedArray{
+                        self.arrayofLastEvents = decodedArray.event
+                         print("arrayofLastEvents  found")
+                        completion(self.arrayofLastEvents,nil)
+                    }
+                    else{
+                        print( url)
+                        print(" arrayofLastEvents not found")
+                    }
+                   
+                }else{
+                    print("No Data")
+                    return
+                }
+            }else{
+                print("error \(String(describing:response.result.error))")
+            }
+        }
+    }
+    
+    
+    
+    
+    
 }
     

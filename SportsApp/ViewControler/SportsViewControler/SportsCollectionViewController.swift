@@ -14,7 +14,6 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
     var arrayOfSports = [Sport]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let ViewModel =  SportsViewModel()
         ViewModel.fetchData(url:URLs.allSports)
         ViewModel.updateData = { sports , error in
@@ -89,17 +88,19 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
     }
     */
     // MARK: UICollectionViewDelegateFlowLayout
+   
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 209.0, height: 200.0)
+        return CGSize(width: 202.0, height: 200.0)
+       
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 10
 //    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 1
+//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 5, bottom: 1, right: 5)
+    }
 }
 

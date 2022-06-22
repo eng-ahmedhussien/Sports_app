@@ -1,15 +1,15 @@
 //
-//  AllLeagusViewModel.swift
+//  DicTeamsViewModel.swift
 //  SportsApp
 //
-//  Created by Ahmed Hussien on 21/11/1443 AH.
+//  Created by Ahmed Hussien on 23/11/1443 AH.
 //
 
 import Foundation
-class AllLeagusViewModel{
-    var leaguesArray: [League]? {
+class DicTeamsViewModel{
+    var dicteamsArray: [[String: String?]]? {
         didSet{
-            updateData(leaguesArray, nil)
+            updateData(dicteamsArray, nil)
         }
     }
     var error: Error? {
@@ -19,16 +19,15 @@ class AllLeagusViewModel{
     }
     
     let SportsApi: SportsApi
-    var updateData : (([League]?,Error?) -> Void) = {_ , _ in}
-    
+    var updateData : (([[String: String?]]?,Error?) -> Void) = {_ , _ in}
     init(SportsApi: SportsApi = NetworkManger()) {
         self.SportsApi = SportsApi
     }
     
     func fetchData(url:String){
-        SportsApi.allLeaguesAPI(url: url) { leagues, error in
-            if let leagues = leagues {
-                self.leaguesArray = leagues
+        SportsApi.dictionaryTeam(url: url) { dicteams, error in
+            if let dicteams = dicteams {
+                self.dicteamsArray = dicteams
                 //print(sports.count)
             }
             if let error = error {
@@ -37,7 +36,5 @@ class AllLeagusViewModel{
         }
         
     }
-    
-
     
 }

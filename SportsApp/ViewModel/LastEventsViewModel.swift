@@ -1,15 +1,15 @@
 //
-//  AllLeagusViewModel.swift
+//  LastEvents.swift
 //  SportsApp
 //
-//  Created by Ahmed Hussien on 21/11/1443 AH.
+//  Created by Ahmed Hussien on 23/11/1443 AH.
 //
 
 import Foundation
-class AllLeagusViewModel{
-    var leaguesArray: [League]? {
+class LastEventsViewModel{
+    var lastEventsArray: [Event]? {
         didSet{
-            updateData(leaguesArray, nil)
+            updateData(lastEventsArray, nil)
         }
     }
     var error: Error? {
@@ -19,25 +19,24 @@ class AllLeagusViewModel{
     }
     
     let SportsApi: SportsApi
-    var updateData : (([League]?,Error?) -> Void) = {_ , _ in}
+    var updateData : (([Event]?,Error?) -> Void) = {_ , _ in}
     
     init(SportsApi: SportsApi = NetworkManger()) {
         self.SportsApi = SportsApi
     }
     
     func fetchData(url:String){
-        SportsApi.allLeaguesAPI(url: url) { leagues, error in
-            if let leagues = leagues {
-                self.leaguesArray = leagues
-                //print(sports.count)
+        SportsApi.lastEvents(url: url) { lastevents, error in
+            if let lastevents = lastevents {
+                self.lastEventsArray = lastevents
+                print(self.lastEventsArray!.count)
             }
             if let error = error {
                 self.error = error
             }
         }
+       
         
     }
-    
-
     
 }

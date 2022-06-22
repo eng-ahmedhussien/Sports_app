@@ -67,6 +67,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "teamsViewController") as? teamsViewController
+        vc?.leaguename = arrayOfLeaguesInSport[indexPath.row].strLeague
         vc?.leagueId = arrayOfLeaguesInSport[indexPath.row].idLeague
         self.present(vc!, animated: true, completion: nil)
         //navigationController?.pushViewController(vc!, animated: true)
