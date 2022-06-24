@@ -8,7 +8,7 @@
 import UIKit
 
 class UpcomingEventsCell: UICollectionViewCell {
-    @IBOutlet weak var eventName: UILabel!
+    
     @IBOutlet weak var eventData: UILabel!
     
     @IBOutlet weak var t2: UILabel!

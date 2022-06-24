@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class AllLeagusVM{
+class AllLeagusBySport{
     
     var leaguesArray: [Leagu]? {
         didSet{

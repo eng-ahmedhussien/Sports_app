@@ -12,14 +12,13 @@ import UIKit
 
 class NetworkManger:SportsApi{
     
-    
- 
     var arrayofSports = [Sport]()
     var arrayofleagus = [League]()
+    var arrayofleagus2 = [Leagu]()
     var arrayofTeams = [Team]()
     var arrayofDicTeams = [[String: String?]]()
     var arrayofEvents = [[String: String?]]()
-    var arrayofLastEvents = [Event]()
+    var arrayofLastEvents = [[String: String?]]()
     
     //MARK: allSports
     func allSports(url: String, completion: @escaping (([Sport]?, Error?) -> Void)) {
@@ -64,6 +63,27 @@ class NetworkManger:SportsApi{
         }
         
     }
+    //MARK: allLeaguesbySport
+    func allLeaguesBySport(url: String, completion: @escaping (([Leagu]?, Error?) -> Void)) {
+        Alamofire.request(url).validate().responseJSON { response in
+            if response.result.isSuccess
+            {
+                if let data = response.data{
+                    let decoder = JSONDecoder()
+                    let decodedArray = try? decoder.decode(allLeagu.self, from: data)
+                    self.arrayofleagus2 = decodedArray!.countries
+                   // print(self.decodedSports.count)
+                    completion(self.arrayofleagus2,nil)
+                }else{
+                    print("No Data")
+                    return
+                }
+            }else{
+                print("error \(String(describing:response.result.error))")
+            }
+        }
+        
+    }
     //MARK: allTeams
     func allTeams(url: String, completion: @escaping (([Team]?, Error?) -> Void)) {
         Alamofire.request(url).validate().responseJSON { response in
@@ -92,9 +112,14 @@ class NetworkManger:SportsApi{
                 if let data = response.data{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(Upcoming.self, from: data)
-                    self.arrayofEvents = decodedArray!.events
-                    // print(self.decodedSports.count)
-                    completion(self.arrayofEvents,nil)
+                    if let d = decodedArray?.events{
+                        self.arrayofEvents = d
+                        completion(self.arrayofEvents,nil)
+                    }
+                    else{
+                        print("No upcoming events")
+                    }
+                    
                 }else{
                     print("No Data")
                     return
@@ -112,9 +137,14 @@ class NetworkManger:SportsApi{
                 if let data = response.data{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(DictionaryTeam.self, from: data)
-                    self.arrayofDicTeams = decodedArray!.teams
-                    // print(self.decodedSports.count)
-                    completion(self.arrayofDicTeams,nil)
+                    if let d = decodedArray?.teams{
+                        self.arrayofDicTeams = d
+                        completion(self.arrayofDicTeams,nil)
+                    }
+                    else{
+                        print("No  teams ")
+                    }
+                    
                 }else{
                     print("No Data")
                     return
@@ -125,7 +155,7 @@ class NetworkManger:SportsApi{
         }
     }
     //MARK: lastEvents
-    func lastEvents(url: String, completion: @escaping (([Event]?, Error?) -> Void)) {
+    func lastEvents(url: String, completion: @escaping (([[String: String?]]?, Error?) -> Void)) {
         Alamofire.request(url).validate().responseJSON { response in
             if response.result.isSuccess
             {
@@ -133,7 +163,7 @@ class NetworkManger:SportsApi{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(Welcome.self, from: data)
                     if let  decodedArray = decodedArray{
-                        self.arrayofLastEvents = decodedArray.event
+                        self.arrayofLastEvents = decodedArray.events
                          print("arrayofLastEvents  found")
                         completion(self.arrayofLastEvents,nil)
                     }

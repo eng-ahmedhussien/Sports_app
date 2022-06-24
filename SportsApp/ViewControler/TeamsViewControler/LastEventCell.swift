@@ -9,6 +9,9 @@ import UIKit
 
 class LastEventCell: UICollectionViewCell {
     
+    
+    @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var data: UILabel!
     @IBOutlet weak var s2: UILabel!
     @IBOutlet weak var s1: UILabel!
     @IBOutlet weak var t1: UILabel!

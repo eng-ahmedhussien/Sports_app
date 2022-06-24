@@ -3,10 +3,12 @@
     <entity name="CoreLeague" representedClassName="CoreLeague" syncable="YES" codeGenerationType="class">
         <attribute name="alternate" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="sport" optional="YES" attributeType="String"/>
+        <attribute name="youtube" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="CoreLeague" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="CoreLeague" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>

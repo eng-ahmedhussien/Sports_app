@@ -43,10 +43,10 @@ class TeamsDeatilsViewController: UIViewController {
             imageTeam.image = UIImage(data: data)
         }
         
-        let url2 = URL(string:iback)
-        if let data = try? Data(contentsOf: url2!) {
-            imageback.image = UIImage(data: data)
-        }
+//        let url2 = URL(string:iback)
+//        if let data = try? Data(contentsOf: url2!) {
+//            imageback.image = UIImage(data: data)
+//        }
         
         //iteam
     }

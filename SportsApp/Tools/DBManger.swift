@@ -14,7 +14,7 @@ class DBManager{
 }
 extension DBManager{
     
-    func addMovie(appDelegate: AppDelegate,id: String, name: String, sport: String,alternate:String){
+    func addMovie(appDelegate: AppDelegate,id: String, name: String, sport: String, alternate: String,image: String,youtube: String){
         let managedContext = appDelegate.persistentContainer.viewContext
 
         //if there is an entity called "Movie" then a value returns otherwise, it would be nil
@@ -25,6 +25,8 @@ extension DBManager{
             CoreLeague.setValue(name, forKey: "name")
             CoreLeague.setValue(sport, forKey: "sport")
             CoreLeague.setValue(alternate, forKey: "alternate")
+            CoreLeague.setValue(image, forKey: "image")
+            CoreLeague.setValue(youtube, forKey: "youtube")
             do {
                 try managedContext.save()
                 print(" sucss add")
@@ -55,7 +57,7 @@ extension DBManager{
         return fetchedList
     }
 
-    func delete(CoreLeague:CoreLeague, appDelegate: AppDelegate/*, delegate: DeletionDelegate*/){
+    func delete(CoreLeague:CoreLeague, appDelegate: AppDelegate){
     
         let managedContext = appDelegate.persistentContainer.viewContext
         managedContext.delete(CoreLeague)

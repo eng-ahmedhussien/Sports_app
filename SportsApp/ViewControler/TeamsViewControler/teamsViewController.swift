@@ -13,21 +13,23 @@ class teamsViewController: UIViewController{
     @IBOutlet weak var UpcomingEventsCollection: UICollectionView!
     @IBOutlet weak var LastEventsCollection: UICollectionView!
     @IBOutlet weak var fac: UIToolbar!
+    @IBOutlet weak var favoriteB: UIBarButtonItem!
     
     var arrayOfTeams = [Team]()
     var arrayOfDicTeams = [[String: String?]]()
     var arrayOfEvents = [[String: String?]]()
-    var arrayOfLeagues = [League]()
+    var arrayOfLeagues = [Leagu]()
     var arrayOfLeaguesCore = [CoreLeague]()
-    var arrayOfLastEvents = [Event]()
+    var arrayOfLastEvents = [[String: String?]]()
     var leagueId = ""
     var leaguename = ""
-    var favoriteCheck = false
+    var sportName  = ""
     var db = DBManager()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         teamsCollection.dataSource = self
         teamsCollection.delegate = self
         
@@ -41,8 +43,16 @@ class teamsViewController: UIViewController{
         upcomingScreenData()
         LastEventScreenData()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        if favoriteCheck() == true {
+            favoriteB.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal, barMetrics: .default)
+        }
+        else{
+            favoriteB.setBackgroundImage(UIImage(systemName: "star"), for: .normal, barMetrics: .default)
+        }
+    }
+    //MARK: teamsScreenData
     func teamsScreenData(){
-       
         let ViewModel = DicTeamsViewModel()
         let leagueNameArray = leaguename.split(separator: " ")
         var leagueName = ""
@@ -51,15 +61,14 @@ class teamsViewController: UIViewController{
                 leagueName += "\(leagueNameArray[i])"
             }
             else{
-            leagueName += "\(leagueNameArray[i])%20"
+                leagueName += "\(leagueNameArray[i])%20"
             }
         }
-        
         ViewModel.fetchData(url:"\(URLs.allTeamsInLeague)\(leagueName)")
         print("\(URLs.allTeamsInLeague)\(leagueName)")
-        ViewModel.updateData = { dicteams , error in
-            if let dicteams = dicteams {
-                self.arrayOfDicTeams = dicteams
+        ViewModel.updateData = { teams , error in
+            if let teams = teams {
+                self.arrayOfDicTeams = teams
                 self.teamsCollection.reloadData()
             }
             if let error = error {
@@ -67,18 +76,20 @@ class teamsViewController: UIViewController{
             }
         }
         //let ViewModel = TeamsViewModel()
-//        ViewModel.fetchData(url:"\(URLs.allTeamsInLeague)\(newurl)")
-//        print("\(URLs.allTeamsInLeague)\(leagueId)")
-//        ViewModel.updateData = { teams , error in
-//            if let teams = teams {
-//                self.arrayOfTeams = teams
-//                self.teamsCollection.reloadData()
-//            }
-//            if let error = error {
-//                print(error.localizedDescription)
-//            }
-//        }
+        //        ViewModel.fetchData(url:"\(URLs.allTeamsInLeague)\(newurl)")
+        //        print("\(URLs.allTeamsInLeague)\(leagueId)")
+        //        ViewModel.updateData = { teams , error in
+        //            if let teams = teams {
+        //                self.arrayOfTeams = teams
+        //                self.teamsCollection.reloadData()
+        //            }
+        //            if let error = error {
+        //                print(error.localizedDescription)
+        //            }
+        //        }
     }
+    
+    //MARK: upcomingScreenData
     func upcomingScreenData(){
         let ViewModel = UpcomingEventViewModel()
         ViewModel.fetchData(url:"\(URLs.upcomingUrl)\(leagueId)")
@@ -93,10 +104,11 @@ class teamsViewController: UIViewController{
             }
         }
     }
+    
+    //MARK: LastEventScreenData
     func LastEventScreenData(){
-         let ViewModel = LastEventsViewModel()
-         let leagueNameArray = leaguename.split(separator: " ")
-         var leagueName = ""
+//         let leagueNameArray = leaguename.split(separator: " ")
+//         var leagueName = ""
 //         for i in 0..<leagueNameArray.count{
 //             if i == leagueNameArray.count-1{
 //                 leagueName += "\(leagueNameArray[i])%202021"
@@ -105,7 +117,8 @@ class teamsViewController: UIViewController{
 //             leagueName += "\(leagueNameArray[i])%20"
 //             }
 //         }
-         ViewModel.fetchData(url:"\(URLs.eventUrl)")
+        let ViewModel = LastEventsViewModel()
+        ViewModel.fetchData(url:"\(URLs.lastevents)\(leagueId)")
         // print("\(URLs.eventUrl)\(leagueName)")
          ViewModel.updateData = { lastevents , error in
              if let lastevents = lastevents {
@@ -116,50 +129,91 @@ class teamsViewController: UIViewController{
                  print(error.localizedDescription)
              }
          }
-  
     }
-    func check()->Bool{
+    
+    //MARK: checkIfExistInCoreData
+    func checkIfExistInCoreData()->Bool{
         arrayOfLeaguesCore = db.fetchData(appDelegate: appDelegate)
         for j in self.arrayOfLeaguesCore{
             if j.id == leagueId{
                 db.delete(CoreLeague: j, appDelegate: appDelegate)
+                createAlart(title: "sccuess", message: "league removed from favorite")
                 return true
             }
         }
         return false
-        
+    }
+    func favoriteCheck()->Bool{
+        arrayOfLeaguesCore = db.fetchData(appDelegate: appDelegate)
+        for j in self.arrayOfLeaguesCore{
+            if j.id == leagueId{
+                return true
+            }
+        }
+        return false
     }
     
+    //MARK: back to league view
     @IBAction func returnToleagues(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-  
+    //MARK: favorite button
     @IBAction func Favorite(_ sender: UIBarButtonItem) {
-        favoriteCheck = !favoriteCheck
-        let ViewModel = AllLeagusViewModel()
-        ViewModel.fetchData(url:URLs.allLeaguesurl)
-
+        let ViewModel = AllLeagusBySport()
+        ViewModel.fetchData(url:"\(URLs.allLeaguesBySport)\(sportName)")
         ViewModel.updateData = { leagues , error in
             if let leagues = leagues {
-                if   self.check() == false{
+                if  self.checkIfExistInCoreData() == false{
                     self.arrayOfLeagues = leagues
                     for i in self.arrayOfLeagues{
                         if i.idLeague == self.leagueId{
-                            self.db.addMovie(appDelegate: self.appDelegate, id: i.idLeague, name: i.strLeague, sport: i.strSport, alternate: i.strLeagueAlternate!)
+                            self.db.addMovie(appDelegate: self.appDelegate, id: i.idLeague, name: i.strLeague, sport: i.strSport, alternate: i.strLeagueAlternate!,image: i.strBadge,youtube: i.strYoutube)
                         }
                     }
+                    self.favoriteB.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal, barMetrics: .default)
+                    self.createAlart(title: "sccuess", message: "league added")
                 }
+                
+               // sender.setBackgroundImage(UIImage(systemName: "star"), for: .normal, barMetrics: .default)
             }
             if let error = error {
                 print(error.localizedDescription)
             }
         }
+//        favoriteCheck = !favoriteCheck
+//        let ViewModel = AllLeagusViewModel()
+//        ViewModel.fetchData(url:URLs.allLeaguesBySport)
+//
+//        ViewModel.updateData = { leagues , error in
+//            if let leagues = leagues {
+//                if   self.check() == false{
+//                    self.arrayOfLeagues = leagues
+//                    for i in self.arrayOfLeagues{
+//                        if i.idLeague == self.leagueId{
+//                            self.db.addMovie(appDelegate: self.appDelegate, id: i.idLeague, name: i.strLeague, sport: i.strSport, alternate: i.strLeagueAlternate!)
+//                        }
+//                    }
+//                }
+//            }
+//            if let error = error {
+//                print(error.localizedDescription)
+//            }
+//        }
         
     }
     
-   
+    func createAlart(title:String,message:String){
+            let alart = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okButton = UIAlertAction(title: "ok", style: .default, handler: nil)
+            alart.addAction(okButton)
+             present(alart, animated: true, completion: nil)
+            
+        }
 }
+
+// MARK: teamsViewController
 extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.teamsCollection{
             print("in teamsCollection")
@@ -177,62 +231,59 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        
         if collectionView == self.teamsCollection{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamCell", for: indexPath) as? TeamCell
             cell?.nameTeam.text = arrayOfDicTeams[indexPath.row]["strTeam"] as! String
-            let url = URL(string:(arrayOfDicTeams[indexPath.row]["strTeamBadge"])!! )
-            if let data = try? Data(contentsOf: url!) {
-                cell?.imageTeam.image = UIImage(data: data)
+
+            if  let url = URL(string:(((arrayOfDicTeams[indexPath.row]["strTeamBadge"] ?? " ") ?? " ")) ){
+                if let data = try? Data(contentsOf: url) {
+                    cell?.imageTeam.image = UIImage(data: data)
+                }
             }
-//            cell?.nameTeam.text = arrayOfTeams[indexPath.row].strTeam
-//            let url = URL(string:arrayOfTeams[indexPath.row].strTeamBadge )
-//            if let data = try? Data(contentsOf: url!) {
-//                cell?.imageTeam.image = UIImage(data: data)
-//
-//            }
-            cell!.layer.cornerRadius = 20
+          
+            
+            cell!.layer.borderColor = UIColor.black.cgColor
+            cell!.layer.borderWidth = 1
+            cell?.layer.cornerRadius  = 20
+            cell!.clipsToBounds = true
             return cell!
         }
-        else if collectionView == self.UpcomingEventsCollection{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as? UpcomingEventsCell
-            cell?.eventData.text = arrayOfEvents[indexPath.row]["dateEvent"] as? String
-            cell?.eventName.text = arrayOfEvents[indexPath.row]["strEvent"] as? String
-            cell?.t1.text = arrayOfEvents[indexPath.row]["strHomeTeam"] as? String
-            cell?.t2.text = arrayOfEvents[indexPath.row]["strAwayTeam"] as? String
-            cell!.layer.cornerRadius = 20
+        else if collectionView == self.LastEventsCollection{
         
-        return cell!
-//            {
-//
-//                let url = URL(string:(self.arrayOfEvents[indexPath.row]["strThumb"] as? String)!)
-//                if let url = url {
-//                    print("scuss")
-//                    let data = try? Data(contentsOf: url)
-//                    cell?.eventImage.image = UIImage(data: data!)
-//                    print(url)
-//                }
-//                else{
-//                    print("error")}
-//            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LastEventCell", for: indexPath) as? LastEventCell
+            
+            cell?.t1.text = arrayOfLastEvents[indexPath.row]["strHomeTeam"] as? String
+            cell?.t2.text = arrayOfLastEvents[indexPath.row]["strAwayTeam"] as? String
+            cell!.s1.text = arrayOfLastEvents[indexPath.row]["intHomeScore"] as? String
+            cell?.s2.text = arrayOfLastEvents[indexPath.row]["intAwayScore"] as? String
+            cell?.data.text = arrayOfLastEvents[indexPath.row]["dateEvent"] as? String
+            cell?.time.text = arrayOfLastEvents[indexPath.row]["strTime"] as? String
+            
+            cell!.layer.borderColor = UIColor.black.cgColor
+            cell!.layer.borderWidth = 1
+            cell?.layer.cornerRadius  = 20
+            cell!.clipsToBounds = true
+            return cell!
             
         }
-         else{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LastEventCell", for: indexPath) as? LastEventCell
-                
-                cell?.t1.text = arrayOfLastEvents[indexPath.row].strHomeTeam
+        else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as? UpcomingEventsCell
+            cell?.eventData.text = arrayOfEvents[indexPath.row]["dateEvent"] as? String
+            cell?.t1.text = arrayOfEvents[indexPath.row]["strHomeTeam"] as? String
+            cell?.t2.text = arrayOfEvents[indexPath.row]["strAwayTeam"] as? String
+            cell!.layer.borderColor = UIColor.black.cgColor
+            cell!.layer.borderWidth = 1
+            cell?.layer.cornerRadius  = 20
+            cell!.clipsToBounds = true
+        
+        return cell!
             
-    //            cell?.nameTeam.text = arrayOfTeams[indexPath.row].strTeam
-    //            let url = URL(string:arrayOfTeams[indexPath.row].strTeamBadge )
-    //            if let data = try? Data(contentsOf: url!) {
-    //                cell?.imageTeam.image = UIImage(data: data)
-    //
-    //            }
-                cell!.layer.cornerRadius = 20
-                return cell!
-           
         }
     
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView == self.teamsCollection{
@@ -241,7 +292,7 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
             vc?.lname = arrayOfDicTeams[indexPath.row]["strLeague"]!!
             vc?.sname = arrayOfDicTeams[indexPath.row]["strStadium"]!!
             vc?.ifront = arrayOfDicTeams[indexPath.row]["strTeamBadge"]!!
-            vc?.iback = arrayOfDicTeams[indexPath.row]["strTeamFanart2"]!!
+           // vc?.iback = arrayOfDicTeams[indexPath.row]["strTeamFanart1"]!!
             vc?.dteam = arrayOfDicTeams[indexPath.row]["strDescriptionEN"]!!
             vc?.instagram = arrayOfDicTeams[indexPath.row]["strInstagram"]!!
             vc?.facebook = arrayOfDicTeams[indexPath.row]["strFacebook"]!!
@@ -252,12 +303,18 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
     }
     // MARK: UICollectionViewDelegateFlowLayout
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 209.0, height: 200.0)
+//        if collectionView != LastEventsCollection{
+//            return CGSize(width: 209.0, height: 200.0)
+//        }
+//        else
+//        {
+//            return CGSize(width: 400, height: 200.0)
+//        }
 //    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 1
+//    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 1
+//    }
 }

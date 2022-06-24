@@ -22,7 +22,6 @@ class FavoriteTable: UITableViewController {
         arrayOfFavorite  = db1.fetchData(appDelegate: appDelegate)
         tableView.reloadData()
     }
-    
     func checkNetwork(){
         reachabilityManager?.startListening()
         reachabilityManager?.listener = { _ in
@@ -48,12 +47,10 @@ class FavoriteTable: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return arrayOfFavorite.count
     }
 
@@ -61,7 +58,16 @@ class FavoriteTable: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as? FavoriteCell
         cell?.leaguename.text = arrayOfFavorite[indexPath.row].name
-
+        cell?.youtube = arrayOfFavorite[indexPath.row].youtube!
+        
+        let url = URL(string: arrayOfFavorite[indexPath.row].image!)!
+        if let data = try? Data(contentsOf: url) {
+            cell!.leagueimage.image = UIImage(data: data)
+        }
+        cell!.layer.borderColor = UIColor.black.cgColor
+        cell!.layer.borderWidth = 2
+        cell?.layer.cornerRadius  = 20
+        cell!.clipsToBounds = true
         return cell!
     }
     
@@ -74,61 +80,24 @@ class FavoriteTable: UITableViewController {
                isNetworkReachable == true {
                 vc?.leaguename = self.arrayOfFavorite[indexPath.row].name!
                 vc?.leagueId  = self.arrayOfFavorite[indexPath.row].id!
+                vc?.sportName = self.arrayOfFavorite[indexPath.row].sport!
                 self.present(vc!, animated: true, completion: nil);
                 print("Internet Available")
             } else {
+                
                 self.creatAlert(title: "error connection ", message: "Internet Not Available")
                 print("Internet Not Available")
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Favorite"
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       return 80
         
-        
-        
-        //navigationController?.pushViewController(vc!, animated: true)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
  
 }

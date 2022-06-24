@@ -7,6 +7,7 @@
 
 import Foundation
 class AllLeagusViewModel{
+    
     var leaguesArray: [League]? {
         didSet{
             updateData(leaguesArray, nil)
@@ -17,14 +18,14 @@ class AllLeagusViewModel{
             updateData(nil, error)
         }
     }
-    
+
     let SportsApi: SportsApi
     var updateData : (([League]?,Error?) -> Void) = {_ , _ in}
-    
+
     init(SportsApi: SportsApi = NetworkManger()) {
         self.SportsApi = SportsApi
     }
-    
+
     func fetchData(url:String){
         SportsApi.allLeaguesAPI(url: url) { leagues, error in
             if let leagues = leagues {
@@ -35,9 +36,8 @@ class AllLeagusViewModel{
                 self.error = error
             }
         }
-        
+
     }
     
-
-    
+  
 }

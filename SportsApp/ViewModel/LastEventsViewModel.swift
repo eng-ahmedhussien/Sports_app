@@ -7,7 +7,7 @@
 
 import Foundation
 class LastEventsViewModel{
-    var lastEventsArray: [Event]? {
+    var lastEventsArray: [[String: String?]]? {
         didSet{
             updateData(lastEventsArray, nil)
         }
@@ -19,7 +19,7 @@ class LastEventsViewModel{
     }
     
     let SportsApi: SportsApi
-    var updateData : (([Event]?,Error?) -> Void) = {_ , _ in}
+    var updateData : (([[String: String?]]?,Error?) -> Void) = {_ , _ in}
     
     init(SportsApi: SportsApi = NetworkManger()) {
         self.SportsApi = SportsApi
