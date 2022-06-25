@@ -48,10 +48,11 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         if let data = try? Data(contentsOf: url!) {
             cell?.sportImage.image = UIImage(data: data)
         }
-       // cell!.layer.borderColor = UIColor.black.cgColor
-       // cell!.layer.borderWidth = 1
-        cell?.layer.cornerRadius  = 20
+        cell!.layer.borderColor = UIColor.black.cgColor
+        cell!.layer.borderWidth = 1
+        cell?.layer.cornerRadius  = 30
         //cell!.clipsToBounds = true
+       // cell?.sportImage.layer.cornerRadius = (cell?.sportImage.frame.height)!/7
         return cell!
     }
     

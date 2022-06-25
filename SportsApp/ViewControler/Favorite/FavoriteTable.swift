@@ -92,7 +92,14 @@ class FavoriteTable: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Favorite"
     }
-    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = UIColor.white
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        header.textLabel?.frame = header.bounds
+        header.textLabel?.textAlignment = .center
+        
+    }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
        return 80
         

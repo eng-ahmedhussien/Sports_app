@@ -73,12 +73,10 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
     // MARK: - Table view data source
 
      func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return arrayOfLeaguesBySport.count
     }
 
@@ -99,6 +97,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
          cell!.layer.borderWidth = 1
          cell?.layer.cornerRadius  = 10
          cell!.clipsToBounds = true
+       //  cell?.contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
          //cell?.imageLeague.layer.cornerRadius = (cell?.imageLeague.frame.height)!/2
          return cell!
      }
@@ -110,15 +109,24 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.present(vc!, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
         return "leagues"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = UIColor.white
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        header.textLabel?.frame = header.bounds
+        header.textLabel?.textAlignment = .center
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
        return 80
-        
     }
    
 //    func tableView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//            return UIEdgeInsets(top: 1, left: 5, bottom: 1, right: 5)
+//            return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
 //        }
 }

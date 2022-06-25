@@ -26,7 +26,6 @@
 		FC89E2B72860CF7100A5FDA3 /* SportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2B62860CF7100A5FDA3 /* SportCell.swift */; };
 		FC89E2B92860D06400A5FDA3 /* SportsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2B82860D06400A5FDA3 /* SportsCollectionViewController.swift */; };
 		FC89E2BB2860E54800A5FDA3 /* AllSports.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2BA2860E54800A5FDA3 /* AllSports.swift */; };
-		FC89E2BD2860E6A700A5FDA3 /* createAlart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2BC2860E6A700A5FDA3 /* createAlart.swift */; };
 		FC89E2BF2860E76100A5FDA3 /* SportsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2BE2860E76100A5FDA3 /* SportsApi.swift */; };
 		FC89E2C12860E7BB00A5FDA3 /* NetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2C02860E7BB00A5FDA3 /* NetworkManger.swift */; };
 		FC89E2C32860F0F400A5FDA3 /* SportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2C22860F0F400A5FDA3 /* SportsViewModel.swift */; };
@@ -71,7 +70,6 @@
 		FC89E2B62860CF7100A5FDA3 /* SportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportCell.swift; sourceTree = "<group>"; };
 		FC89E2B82860D06400A5FDA3 /* SportsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCollectionViewController.swift; sourceTree = "<group>"; };
 		FC89E2BA2860E54800A5FDA3 /* AllSports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSports.swift; sourceTree = "<group>"; };
-		FC89E2BC2860E6A700A5FDA3 /* createAlart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createAlart.swift; sourceTree = "<group>"; };
 		FC89E2BE2860E76100A5FDA3 /* SportsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsApi.swift; sourceTree = "<group>"; };
 		FC89E2C02860E7BB00A5FDA3 /* NetworkManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManger.swift; sourceTree = "<group>"; };
 		FC89E2C22860F0F400A5FDA3 /* SportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsViewModel.swift; sourceTree = "<group>"; };
@@ -215,7 +213,6 @@
 		FC89E2B52860C83800A5FDA3 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				FC89E2BC2860E6A700A5FDA3 /* createAlart.swift */,
 				FC89E2C72861169B00A5FDA3 /* Urls.swift */,
 				FCDD299028628FBF004423E8 /* DBManger.swift */,
 			);
@@ -430,7 +427,6 @@
 				FCDD298F2862440B004423E8 /* UpcomingEventViewModel.swift in Sources */,
 				FC89E2A32860C7A400A5FDA3 /* SportsApp.xcdatamodeld in Sources */,
 				FC08C3B2286360CD00703656 /* LastEventsViewModel.swift in Sources */,
-				FC89E2BD2860E6A700A5FDA3 /* createAlart.swift in Sources */,
 				FC89E2C82861169B00A5FDA3 /* Urls.swift in Sources */,
 				FC89E2C5286104FE00A5FDA3 /* LegsTable.swift in Sources */,
 				FC89E2D2286128FA00A5FDA3 /* LeagueCell.swift in Sources */,
