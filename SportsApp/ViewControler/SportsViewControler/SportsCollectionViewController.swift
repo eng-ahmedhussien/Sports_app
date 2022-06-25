@@ -23,7 +23,7 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         ViewModel.updateData = { sports , error in
             if let sports = sports {
                 self.arrayOfSports = sports
-                print(self.arrayOfSports.count)
+                //print(self.arrayOfSports.count)
                 self.collectionView.reloadData()
             }
             if let error = error {
@@ -48,10 +48,10 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         if let data = try? Data(contentsOf: url!) {
             cell?.sportImage.image = UIImage(data: data)
         }
-        cell!.layer.borderColor = UIColor.black.cgColor
-        cell!.layer.borderWidth = 1
+       // cell!.layer.borderColor = UIColor.black.cgColor
+       // cell!.layer.borderWidth = 1
         cell?.layer.cornerRadius  = 20
-        cell!.clipsToBounds = true
+        //cell!.clipsToBounds = true
         return cell!
     }
     

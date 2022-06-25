@@ -14,7 +14,7 @@ class NetworkManger:SportsApi{
     
     var arrayofSports = [Sport]()
     var arrayofleagus = [League]()
-    var arrayofleagus2 = [Leagu]()
+    var arrayofleagusBySport = [Leagu]()
     var arrayofTeams = [Team]()
     var arrayofDicTeams = [[String: String?]]()
     var arrayofEvents = [[String: String?]]()
@@ -26,15 +26,19 @@ class NetworkManger:SportsApi{
             if response.result.isSuccess
             {
                 if let data = response.data{
-//                    let decodedArray:[Sport] = convertFromJson(data: data) ?? []
-//                    print(decodedArray.count)
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(AllSports.self, from: data)
-                    self.arrayofSports = decodedArray!.sports
-                   // print(self.decodedSports.count)
-                    completion(self.arrayofSports,nil)
+                    if let decodedArray  = decodedArray?.sports{
+                        self.arrayofSports = decodedArray
+                        completion(self.arrayofSports,nil)
+                    }
+                    else{
+                        print(" arrayofSports nill  ")
+                    }
+                    // print(self.decodedSports.count)
+                    
                 }else{
-                    print("No Data")
+                    print("No Data in arrayofSports")
                     return
                 }
             }else{
@@ -50,11 +54,16 @@ class NetworkManger:SportsApi{
                 if let data = response.data{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(allLeague.self, from: data)
-                    self.arrayofleagus = decodedArray!.leagues
-                   // print(self.decodedSports.count)
-                    completion(self.arrayofleagus,nil)
+                    if let decodedArray  = decodedArray?.leagues{
+                        self.arrayofleagus = decodedArray
+                       // print(self.decodedSports.count)
+                        completion(self.arrayofleagus,nil)
+                    }
+                    else{
+                        print(" arrayofleagus nill  ")
+                    }
                 }else{
-                    print("No Data")
+                    print("No Data arrayofleagus")
                     return
                 }
             }else{
@@ -71,9 +80,15 @@ class NetworkManger:SportsApi{
                 if let data = response.data{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(allLeagu.self, from: data)
-                    self.arrayofleagus2 = decodedArray!.countries
-                   // print(self.decodedSports.count)
-                    completion(self.arrayofleagus2,nil)
+                    if let decodedArray = decodedArray?.countries{
+                        self.arrayofleagusBySport = decodedArray
+                       // print(self.decodedSports.count)
+                        completion(self.arrayofleagusBySport,nil)
+                    }
+                    else{
+                        print("arrayofleagusBySport is nill")
+                    }
+                    
                 }else{
                     print("No Data")
                     return
@@ -92,34 +107,13 @@ class NetworkManger:SportsApi{
                 if let data = response.data{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(Teams.self, from: data)
-                    self.arrayofTeams = decodedArray!.table
-                    // print(self.decodedSports.count)
-                    completion(self.arrayofTeams,nil)
-                }else{
-                    print("No Data")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
-            }
-        }
-    }
-    //MARK: UpcomingEvents
-    func UpcomingEvents(url: String, completion: @escaping (([[String : String?]]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(Upcoming.self, from: data)
-                    if let d = decodedArray?.events{
-                        self.arrayofEvents = d
-                        completion(self.arrayofEvents,nil)
+                    if let decodedArray = decodedArray?.table{
+                        self.arrayofTeams = decodedArray
+                        completion(self.arrayofTeams,nil)
                     }
                     else{
-                        print("No upcoming events")
+                        print("arrayofTeams is nil")
                     }
-                    
                 }else{
                     print("No Data")
                     return
@@ -137,12 +131,37 @@ class NetworkManger:SportsApi{
                 if let data = response.data{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(DictionaryTeam.self, from: data)
-                    if let d = decodedArray?.teams{
-                        self.arrayofDicTeams = d
+                    if let decodedArray = decodedArray?.teams{
+                        self.arrayofDicTeams = decodedArray
                         completion(self.arrayofDicTeams,nil)
                     }
                     else{
-                        print("No  teams ")
+                        print("arrayofDicTeams nill")
+                    }
+                    
+                }else{
+                    print("No Data")
+                    return
+                }
+            }else{
+                print("error \(String(describing:response.result.error))")
+            }
+        }
+    }
+    //MARK: UpcomingEvents
+    func UpcomingEvents(url: String, completion: @escaping (([[String : String?]]?, Error?) -> Void)) {
+        Alamofire.request(url).validate().responseJSON { response in
+            if response.result.isSuccess
+            {
+                if let data = response.data{
+                    let decoder = JSONDecoder()
+                    let decodedArray = try? decoder.decode(Upcoming.self, from: data)
+                    if let decodedArray = decodedArray?.events{
+                        self.arrayofEvents = decodedArray
+                        completion(self.arrayofEvents,nil)
+                    }
+                    else{
+                        print("No upcoming events")
                     }
                     
                 }else{
@@ -163,7 +182,7 @@ class NetworkManger:SportsApi{
                     let decoder = JSONDecoder()
                     let decodedArray = try? decoder.decode(Welcome.self, from: data)
                     if let  decodedArray = decodedArray{
-                        self.arrayofLastEvents = decodedArray.events
+                         self.arrayofLastEvents = decodedArray.events
                          print("arrayofLastEvents  found")
                         completion(self.arrayofLastEvents,nil)
                     }

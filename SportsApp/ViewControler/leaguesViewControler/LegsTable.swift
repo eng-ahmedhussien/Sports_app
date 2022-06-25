@@ -38,7 +38,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         let ViewModel =  AllLeagusBySport()
         ViewModel.fetchData(url:"\(URLs.allLeaguesBySport)\(newsportsName)")
-        print("\(URLs.allLeaguesBySport)\(sportsName)")
+       // print("\(URLs.allLeaguesBySport)\(sportsName)")
         ViewModel.updateData = { allLeague , error in
             if let allLeague = allLeague {
                 self.arrayOfLeaguesBySport  = allLeague
@@ -96,7 +96,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
          
          // add border and color
          cell!.layer.borderColor = UIColor.black.cgColor
-         cell!.layer.borderWidth = 2
+         cell!.layer.borderWidth = 1
          cell?.layer.cornerRadius  = 10
          cell!.clipsToBounds = true
          //cell?.imageLeague.layer.cornerRadius = (cell?.imageLeague.frame.height)!/2
@@ -118,5 +118,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     }
    
-
+//    func tableView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//            return UIEdgeInsets(top: 1, left: 5, bottom: 1, right: 5)
+//        }
 }

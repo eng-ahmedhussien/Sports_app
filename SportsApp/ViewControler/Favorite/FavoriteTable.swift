@@ -13,6 +13,7 @@ class FavoriteTable: UITableViewController {
     var db1 = DBManager()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var arrayOfFavorite = [CoreLeague]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         arrayOfFavorite  =  db1.fetchData(appDelegate: appDelegate)
@@ -45,7 +46,6 @@ class FavoriteTable: UITableViewController {
        }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -54,7 +54,6 @@ class FavoriteTable: UITableViewController {
         return arrayOfFavorite.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as? FavoriteCell
         cell?.leaguename.text = arrayOfFavorite[indexPath.row].name
@@ -65,7 +64,7 @@ class FavoriteTable: UITableViewController {
             cell!.leagueimage.image = UIImage(data: data)
         }
         cell!.layer.borderColor = UIColor.black.cgColor
-        cell!.layer.borderWidth = 2
+        cell!.layer.borderWidth = 1
         cell?.layer.cornerRadius  = 20
         cell!.clipsToBounds = true
         return cell!
@@ -84,7 +83,6 @@ class FavoriteTable: UITableViewController {
                 self.present(vc!, animated: true, completion: nil);
                 print("Internet Available")
             } else {
-                
                 self.creatAlert(title: "error connection ", message: "Internet Not Available")
                 print("Internet Not Available")
             }

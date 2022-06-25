@@ -61,7 +61,7 @@ class teamsViewController: UIViewController{
                 leagueName += "\(leagueNameArray[i])"
             }
             else{
-                leagueName += "\(leagueNameArray[i])%20"
+                leagueName += "\(leagueNameArray[i])_"
             }
         }
         ViewModel.fetchData(url:"\(URLs.allTeamsInLeague)\(leagueName)")
@@ -75,25 +75,26 @@ class teamsViewController: UIViewController{
                 print(error.localizedDescription)
             }
         }
-        //let ViewModel = TeamsViewModel()
-        //        ViewModel.fetchData(url:"\(URLs.allTeamsInLeague)\(newurl)")
-        //        print("\(URLs.allTeamsInLeague)\(leagueId)")
-        //        ViewModel.updateData = { teams , error in
-        //            if let teams = teams {
-        //                self.arrayOfTeams = teams
-        //                self.teamsCollection.reloadData()
-        //            }
-        //            if let error = error {
-        //                print(error.localizedDescription)
-        //            }
-        //        }
+        
+//        let ViewModel = TeamsViewModel()
+//                ViewModel.fetchData(url:"\(URLs.allTeamsInLeague)\(leagueId)")
+//                print("\(URLs.allTeamsInLeague)\(leagueId)")
+//                ViewModel.updateData = { teams , error in
+//                    if let teams = teams {
+//                        self.arrayOfTeams = teams
+//                        self.teamsCollection.reloadData()
+//                    }
+//                    if let error = error {
+//                        print(error.localizedDescription)
+//                    }
+//                }
     }
     
     //MARK: upcomingScreenData
     func upcomingScreenData(){
         let ViewModel = UpcomingEventViewModel()
         ViewModel.fetchData(url:"\(URLs.upcomingUrl)\(leagueId)")
-        print("\(URLs.upcomingUrl)\(leagueId)")
+       // print("\(URLs.upcomingUrl)\(leagueId)")
         ViewModel.updateData = { events , error in
             if let events = events {
                 self.arrayOfEvents = events
@@ -159,15 +160,26 @@ class teamsViewController: UIViewController{
     }
     //MARK: favorite button
     @IBAction func Favorite(_ sender: UIBarButtonItem) {
+        
+        let sportsNameArray = sportName.split(separator: " ")
+        var newsportsName = ""
+        for i in 0..<sportsNameArray.count{
+            if i == sportsNameArray.count-1{
+                newsportsName += "\(sportsNameArray[i])"
+            }
+            else{
+                newsportsName += "\(sportsNameArray[i])%20"
+            }
+        }
         let ViewModel = AllLeagusBySport()
-        ViewModel.fetchData(url:"\(URLs.allLeaguesBySport)\(sportName)")
+        ViewModel.fetchData(url:"\(URLs.allLeaguesBySport)\(newsportsName)")
         ViewModel.updateData = { leagues , error in
             if let leagues = leagues {
                 if  self.checkIfExistInCoreData() == false{
                     self.arrayOfLeagues = leagues
                     for i in self.arrayOfLeagues{
                         if i.idLeague == self.leagueId{
-                            self.db.addMovie(appDelegate: self.appDelegate, id: i.idLeague, name: i.strLeague, sport: i.strSport, alternate: i.strLeagueAlternate!,image: i.strBadge,youtube: i.strYoutube)
+                            self.db.addLeague(appDelegate: self.appDelegate, id: i.idLeague, name: i.strLeague, sport: i.strSport, alternate: i.strLeagueAlternate!,image: i.strBadge,youtube: i.strYoutube)
                         }
                     }
                     self.favoriteB.setBackgroundImage(UIImage(systemName: "star.fill"), for: .normal, barMetrics: .default)
@@ -180,25 +192,6 @@ class teamsViewController: UIViewController{
                 print(error.localizedDescription)
             }
         }
-//        favoriteCheck = !favoriteCheck
-//        let ViewModel = AllLeagusViewModel()
-//        ViewModel.fetchData(url:URLs.allLeaguesBySport)
-//
-//        ViewModel.updateData = { leagues , error in
-//            if let leagues = leagues {
-//                if   self.check() == false{
-//                    self.arrayOfLeagues = leagues
-//                    for i in self.arrayOfLeagues{
-//                        if i.idLeague == self.leagueId{
-//                            self.db.addMovie(appDelegate: self.appDelegate, id: i.idLeague, name: i.strLeague, sport: i.strSport, alternate: i.strLeagueAlternate!)
-//                        }
-//                    }
-//                }
-//            }
-//            if let error = error {
-//                print(error.localizedDescription)
-//            }
-//        }
         
     }
     
@@ -216,15 +209,16 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.teamsCollection{
-            print("in teamsCollection")
-            return arrayOfDicTeams.count
+           // print("in teamsCollection")
+             return arrayOfDicTeams.count
+            
         }
         else if collectionView == self.UpcomingEventsCollection{
-            print("in UpcomingEventsCollection")
+           // print("in UpcomingEventsCollection")
             return arrayOfEvents.count
         }
         else{
-            print("in lastEventsCollection")
+           // print("in lastEventsCollection")
             return arrayOfLastEvents.count
         }
       
@@ -232,18 +226,15 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         if collectionView == self.teamsCollection{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamCell", for: indexPath) as? TeamCell
-            cell?.nameTeam.text = arrayOfDicTeams[indexPath.row]["strTeam"] as! String
-
+            cell?.nameTeam.text = arrayOfDicTeams[indexPath.row]["strTeam"] as? String
             if  let url = URL(string:(((arrayOfDicTeams[indexPath.row]["strTeamBadge"] ?? " ") ?? " ")) ){
                 if let data = try? Data(contentsOf: url) {
                     cell?.imageTeam.image = UIImage(data: data)
                 }
             }
-          
-            
+
             cell!.layer.borderColor = UIColor.black.cgColor
             cell!.layer.borderWidth = 1
             cell?.layer.cornerRadius  = 20
@@ -288,12 +279,12 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
         
         if collectionView == self.teamsCollection{
             let vc = storyboard?.instantiateViewController(withIdentifier: "TeamsDeatilsViewController") as? TeamsDeatilsViewController
-            vc?.tname = arrayOfDicTeams[indexPath.row]["strTeam"]!!
-            vc?.lname = arrayOfDicTeams[indexPath.row]["strLeague"]!!
-            vc?.sname = arrayOfDicTeams[indexPath.row]["strStadium"]!!
-            vc?.ifront = arrayOfDicTeams[indexPath.row]["strTeamBadge"]!!
+            vc?.teamName = arrayOfDicTeams[indexPath.row]["strTeam"]!!
+            vc?.leagueName = arrayOfDicTeams[indexPath.row]["strLeague"]!!
+            vc?.stadiumName = arrayOfDicTeams[indexPath.row]["strStadium"]!!
+            vc?.teamImage = arrayOfDicTeams[indexPath.row]["strTeamBadge"]!!
            // vc?.iback = arrayOfDicTeams[indexPath.row]["strTeamFanart1"]!!
-            vc?.dteam = arrayOfDicTeams[indexPath.row]["strDescriptionEN"]!!
+            vc?.descriptionTeam = arrayOfDicTeams[indexPath.row]["strDescriptionEN"]!!
             vc?.instagram = arrayOfDicTeams[indexPath.row]["strInstagram"]!!
             vc?.facebook = arrayOfDicTeams[indexPath.row]["strFacebook"]!!
             vc?.Twitter = arrayOfDicTeams[indexPath.row]["strTwitter"]!!

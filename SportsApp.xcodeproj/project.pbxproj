@@ -191,9 +191,9 @@
 				FC89E2C22860F0F400A5FDA3 /* SportsViewModel.swift */,
 				FC89E2CB28611DEB00A5FDA3 /* AllLeagusViewModel.swift */,
 				FC08C3BB2863C94800703656 /* allLeaguesBySport.swift */,
+				FC08C3AD28633B2C00703656 /* DicTeamsViewModel.swift */,
 				FCDD298728621677004423E8 /* TemasViewModel.swift */,
 				FCDD298E2862440B004423E8 /* UpcomingEventViewModel.swift */,
-				FC08C3AD28633B2C00703656 /* DicTeamsViewModel.swift */,
 				FC08C3B1286360CD00703656 /* LastEventsViewModel.swift */,
 			);
 			path = ViewModel;

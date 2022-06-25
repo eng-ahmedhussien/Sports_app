@@ -29,7 +29,7 @@ class LastEventsViewModel{
         SportsApi.lastEvents(url: url) { lastevents, error in
             if let lastevents = lastevents {
                 self.lastEventsArray = lastevents
-                print(self.lastEventsArray!.count)
+                //print(self.lastEventsArray!.count)
             }
             if let error = error {
                 self.error = error

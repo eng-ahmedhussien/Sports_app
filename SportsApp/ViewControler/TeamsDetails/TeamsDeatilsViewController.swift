@@ -17,11 +17,11 @@ class TeamsDeatilsViewController: UIViewController {
     @IBOutlet weak var imageTeam: UIImageView!
     @IBOutlet weak var imageback: UIImageView!
     
-    var tname = ""
-    var lname = ""
-    var dteam = ""
-    var sname = ""
-    var ifront = ""
+    var teamName = ""
+    var leagueName = ""
+    var descriptionTeam = ""
+    var stadiumName = ""
+    var teamImage = ""
     var iback  = ""
     var facebook = ""
     var instagram = ""
@@ -32,13 +32,13 @@ class TeamsDeatilsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        discription.text = dteam
-        stadiumname.text = sname
-        leaguename.text = lname
-        nameTeam.text = tname
+        discription.text = descriptionTeam
+        stadiumname.text = stadiumName
+        leaguename.text = leagueName
+        nameTeam.text = teamName
         
 
-        let url1 = URL(string:ifront)
+        let url1 = URL(string:teamImage)
         if let data = try? Data(contentsOf: url1!) {
             imageTeam.image = UIImage(data: data)
         }

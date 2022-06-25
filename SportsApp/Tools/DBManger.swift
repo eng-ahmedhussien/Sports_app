@@ -14,7 +14,7 @@ class DBManager{
 }
 extension DBManager{
     
-    func addMovie(appDelegate: AppDelegate,id: String, name: String, sport: String, alternate: String,image: String,youtube: String){
+    func addLeague(appDelegate: AppDelegate,id: String, name: String, sport: String, alternate: String,image: String,youtube: String){
         let managedContext = appDelegate.persistentContainer.viewContext
 
         //if there is an entity called "Movie" then a value returns otherwise, it would be nil
@@ -42,10 +42,8 @@ extension DBManager{
         var fetchedList : [CoreLeague] = []
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CoreLeague")
-
 //        let predicate = NSPredicate(format: "title == %@", "SpiderMan")
 //        fetchRequest.predicate = predicate
-
         do{
             fetchedList = try managedContext.fetch(fetchRequest) as! [CoreLeague]
             print("sucss fetch")
@@ -53,7 +51,6 @@ extension DBManager{
             print("Error in saving")
             print(error.localizedDescription)
         }
-
         return fetchedList
     }
 
