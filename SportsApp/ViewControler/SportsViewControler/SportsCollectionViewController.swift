@@ -12,18 +12,19 @@ private let reuseIdentifier = "Cell"
 class SportsCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
 
     var arrayOfSports = [Sport]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ScreenData()
     }
 
     func ScreenData(){
+        
         let ViewModel =  SportsViewModel()
         ViewModel.fetchData(url:URLs.allSports)
         ViewModel.updateData = { sports , error in
             if let sports = sports {
                 self.arrayOfSports = sports
-                //print(self.arrayOfSports.count)
                 self.collectionView.reloadData()
             }
             if let error = error {
@@ -43,27 +44,31 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"cell", for: indexPath) as? SportCell
-        cell!.sportName.text = arrayOfSports[indexPath.row].strSport
-        let url = URL(string:arrayOfSports[indexPath.row].strSportThumb)
-        if let data = try? Data(contentsOf: url!) {
-            cell?.sportImage.image = UIImage(data: data)
-        }
+        
+        cell!.configureCell(imageSport: arrayOfSports[indexPath.row].strSportThumb, nameSport: arrayOfSports[indexPath.row].strSport)
+        
         cell!.layer.borderColor = UIColor.black.cgColor
         cell!.layer.borderWidth = 1
         cell?.layer.cornerRadius  = 30
-        //cell!.clipsToBounds = true
-       // cell?.sportImage.layer.cornerRadius = (cell?.sportImage.frame.height)!/7
         return cell!
     }
+    
+    
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SportLegsTable") as? LegsTable
         vc?.sportsName = arrayOfSports[indexPath.row].strSport
         navigationController?.pushViewController(vc!, animated: true)
     }
-   
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 1, left: 5, bottom: 1, right: 5)
-//    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        let leftAndRightPaddings: CGFloat = 10
+        let numberOfItemsPerRow: CGFloat = 2.0
+        
+        let width = (collectionView.frame.width-leftAndRightPaddings)/numberOfItemsPerRow
+        return CGSize(width: width, height: width) // You can change width and height here as pr your requirement
+        
+    }
 }
 

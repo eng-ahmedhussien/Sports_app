@@ -281,31 +281,26 @@ extension teamsViewController:UICollectionViewDelegate,UICollectionViewDataSourc
             let vc = storyboard?.instantiateViewController(withIdentifier: "TeamsDeatilsViewController") as? TeamsDeatilsViewController
             vc?.teamName = arrayOfDicTeams[indexPath.row]["strTeam"]!!
             vc?.leagueName = arrayOfDicTeams[indexPath.row]["strLeague"]!!
-            vc?.stadiumName = arrayOfDicTeams[indexPath.row]["strStadium"]!!
+            if let s = arrayOfDicTeams[indexPath.row]["strStadium"]{
+                vc?.stadiumName = s ?? "no stadium"
+            }
             vc?.teamImage = arrayOfDicTeams[indexPath.row]["strTeamBadge"]!!
-           // vc?.iback = arrayOfDicTeams[indexPath.row]["strTeamFanart1"]!!
-            vc?.descriptionTeam = arrayOfDicTeams[indexPath.row]["strDescriptionEN"]!!
-            vc?.instagram = arrayOfDicTeams[indexPath.row]["strInstagram"]!!
-            vc?.facebook = arrayOfDicTeams[indexPath.row]["strFacebook"]!!
-            vc?.Twitter = arrayOfDicTeams[indexPath.row]["strTwitter"]!!
+            if let  descriptionTeam = arrayOfDicTeams[indexPath.row]["strDescriptionEN"]{
+                vc?.descriptionTeam = descriptionTeam ?? " no descriptionTeam"
+            }
+            if let instagram = arrayOfDicTeams[indexPath.row]["strInstagram"]{
+                vc?.instagram = instagram ?? "not instagram"
+            }
+            
+            if let facebook =  arrayOfDicTeams[indexPath.row]["strFacebook"]{
+                vc?.facebook = facebook ?? "no facebook"
+            }
+            if let Twitter  = arrayOfDicTeams[indexPath.row]["strTwitter"]{
+                vc?.Twitter  = Twitter ?? "no Twitter"
+            }
             self.present(vc!, animated: true, completion: nil)
         }
         
     }
-    // MARK: UICollectionViewDelegateFlowLayout
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if collectionView != LastEventsCollection{
-//            return CGSize(width: 209.0, height: 200.0)
-//        }
-//        else
-//        {
-//            return CGSize(width: 400, height: 200.0)
-//        }
-//    }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 1
-//    }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 1
-//    }
+
 }
