@@ -11,8 +11,6 @@ import CoreData
 class DBManager{
     static let sharedInstance = DBManager()
      init(){}
-}
-extension DBManager{
     
     func addLeague(appDelegate: AppDelegate,id: String, name: String, sport: String, alternate: String,image: String,youtube: String){
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -69,3 +67,4 @@ extension DBManager{
 
     }
 }
+
