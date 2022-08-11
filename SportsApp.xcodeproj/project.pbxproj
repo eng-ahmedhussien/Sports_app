@@ -16,6 +16,17 @@
 		FC08C3B6286361CE00703656 /* LastEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC08C3B5286361CE00703656 /* LastEventCell.swift */; };
 		FC08C3BA2863C2A500703656 /* AllLeaguesBySport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC08C3B92863C2A500703656 /* AllLeaguesBySport.swift */; };
 		FC08C3BC2863C94800703656 /* allLeaguesBySport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC08C3BB2863C94800703656 /* allLeaguesBySport.swift */; };
+		FC091F8F287B81A80043908A /* TeamsDeatilsView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC091F8E287B81A80043908A /* TeamsDeatilsView.storyboard */; };
+		FC091F98287B8A1A0043908A /* TeamsDeatilsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC091F96287B8A1A0043908A /* TeamsDeatilsViewController.xib */; };
+		FC091F9B287BAA6E0043908A /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = FC091F9A287BAA6E0043908A /* NVActivityIndicatorView */; };
+		FC091F9D287BAA6E0043908A /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = FC091F9C287BAA6E0043908A /* NVActivityIndicatorViewExtended */; };
+		FC19C00D28A5017700B84027 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FC19C00C28A5017700B84027 /* FirebaseFirestore */; };
+		FC19C00F28A5017700B84027 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FC19C00E28A5017700B84027 /* FirebaseFirestoreSwift */; };
+		FC19C01128A5070900B84027 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC19C01028A5070900B84027 /* GoogleService-Info.plist */; };
+		FC2201942879FC31000C4589 /* LeagusTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC2201932879FC31000C4589 /* LeagusTable.storyboard */; };
+		FC2201962879FCF5000C4589 /* GenaricTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2201952879FCF5000C4589 /* GenaricTable.swift */; };
+		FC220198287A04E9000C4589 /* LeagueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC220197287A04E9000C4589 /* LeagueCell.xib */; };
+		FC22019C287A4A65000C4589 /* TeamsView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC22019B287A4A65000C4589 /* TeamsView.storyboard */; };
 		FC89E2992860C7A400A5FDA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E2982860C7A400A5FDA3 /* AppDelegate.swift */; };
 		FC89E29B2860C7A400A5FDA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E29A2860C7A400A5FDA3 /* SceneDelegate.swift */; };
 		FC89E29D2860C7A400A5FDA3 /* TeamsDeatilsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC89E29C2860C7A400A5FDA3 /* TeamsDeatilsViewController.swift */; };
@@ -58,6 +69,13 @@
 		FC08C3B5286361CE00703656 /* LastEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastEventCell.swift; sourceTree = "<group>"; };
 		FC08C3B92863C2A500703656 /* AllLeaguesBySport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLeaguesBySport.swift; sourceTree = "<group>"; };
 		FC08C3BB2863C94800703656 /* allLeaguesBySport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allLeaguesBySport.swift; sourceTree = "<group>"; };
+		FC091F8E287B81A80043908A /* TeamsDeatilsView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TeamsDeatilsView.storyboard; sourceTree = "<group>"; };
+		FC091F96287B8A1A0043908A /* TeamsDeatilsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamsDeatilsViewController.xib; sourceTree = "<group>"; };
+		FC19C01028A5070900B84027 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FC2201932879FC31000C4589 /* LeagusTable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LeagusTable.storyboard; sourceTree = "<group>"; };
+		FC2201952879FCF5000C4589 /* GenaricTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenaricTable.swift; sourceTree = "<group>"; };
+		FC220197287A04E9000C4589 /* LeagueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeagueCell.xib; sourceTree = "<group>"; };
+		FC22019B287A4A65000C4589 /* TeamsView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TeamsView.storyboard; sourceTree = "<group>"; };
 		FC89E2952860C7A400A5FDA3 /* SportsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC89E2982860C7A400A5FDA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC89E29A2860C7A400A5FDA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +113,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC19C00F28A5017700B84027 /* FirebaseFirestoreSwift in Frameworks */,
+				FC091F9D287BAA6E0043908A /* NVActivityIndicatorViewExtended in Frameworks */,
+				FC19C00D28A5017700B84027 /* FirebaseFirestore in Frameworks */,
+				FC091F9B287BAA6E0043908A /* NVActivityIndicatorView in Frameworks */,
 				CDD12B60548113946681FF7B /* Pods_SportsApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +255,8 @@
 			children = (
 				FC89E2C4286104FE00A5FDA3 /* LegsTable.swift */,
 				FC89E2D1286128FA00A5FDA3 /* LeagueCell.swift */,
+				FC2201932879FC31000C4589 /* LeagusTable.storyboard */,
+				FC220197287A04E9000C4589 /* LeagueCell.xib */,
 			);
 			path = leaguesViewControler;
 			sourceTree = "<group>";
@@ -249,9 +273,11 @@
 		FC89E2D6286137E900A5FDA3 /* utilits */ = {
 			isa = PBXGroup;
 			children = (
+				FC19C01028A5070900B84027 /* GoogleService-Info.plist */,
 				FC89E2A42860C7AC00A5FDA3 /* Assets.xcassets */,
 				FC89E29A2860C7A400A5FDA3 /* SceneDelegate.swift */,
 				FC89E2982860C7A400A5FDA3 /* AppDelegate.swift */,
+				FC2201952879FCF5000C4589 /* GenaricTable.swift */,
 			);
 			path = utilits;
 			sourceTree = "<group>";
@@ -263,6 +289,7 @@
 				FCDD298328620AE7004423E8 /* TeamCell.swift */,
 				FCDD298A2862408F004423E8 /* UpcomingEventsCell.swift */,
 				FC08C3B5286361CE00703656 /* LastEventCell.swift */,
+				FC22019B287A4A65000C4589 /* TeamsView.storyboard */,
 			);
 			path = TeamsViewControler;
 			sourceTree = "<group>";
@@ -270,8 +297,10 @@
 		FCDD2989286224E6004423E8 /* TeamsDetails */ = {
 			isa = PBXGroup;
 			children = (
+				FC091F96287B8A1A0043908A /* TeamsDeatilsViewController.xib */,
 				FC89E29C2860C7A400A5FDA3 /* TeamsDeatilsViewController.swift */,
 				FCDD298128620ACB004423E8 /* TeamsCollectionView.swift */,
+				FC091F8E287B81A80043908A /* TeamsDeatilsView.storyboard */,
 			);
 			path = TeamsDetails;
 			sourceTree = "<group>";
@@ -303,6 +332,12 @@
 			dependencies = (
 			);
 			name = SportsApp;
+			packageProductDependencies = (
+				FC091F9A287BAA6E0043908A /* NVActivityIndicatorView */,
+				FC091F9C287BAA6E0043908A /* NVActivityIndicatorViewExtended */,
+				FC19C00C28A5017700B84027 /* FirebaseFirestore */,
+				FC19C00E28A5017700B84027 /* FirebaseFirestoreSwift */,
+			);
 			productName = SportsApp;
 			productReference = FC89E2952860C7A400A5FDA3 /* SportsApp.app */;
 			productType = "com.apple.product-type.application";
@@ -331,6 +366,10 @@
 				Base,
 			);
 			mainGroup = FC89E28C2860C7A400A5FDA3;
+			packageReferences = (
+				FC091F99287BAA6E0043908A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
+				FC19C00B28A5017700B84027 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = FC89E2962860C7A400A5FDA3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -345,8 +384,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC091F8F287B81A80043908A /* TeamsDeatilsView.storyboard in Resources */,
+				FC22019C287A4A65000C4589 /* TeamsView.storyboard in Resources */,
+				FC19C01128A5070900B84027 /* GoogleService-Info.plist in Resources */,
+				FC220198287A04E9000C4589 /* LeagueCell.xib in Resources */,
 				FC89E2A82860C7AC00A5FDA3 /* LaunchScreen.storyboard in Resources */,
 				FC89E2A52860C7AC00A5FDA3 /* Assets.xcassets in Resources */,
+				FC091F98287B8A1A0043908A /* TeamsDeatilsViewController.xib in Resources */,
+				FC2201942879FC31000C4589 /* LeagusTable.storyboard in Resources */,
 				FC89E2A02860C7A400A5FDA3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +471,7 @@
 				FCDD299128628FBF004423E8 /* DBManger.swift in Sources */,
 				FCDD298F2862440B004423E8 /* UpcomingEventViewModel.swift in Sources */,
 				FC89E2A32860C7A400A5FDA3 /* SportsApp.xcdatamodeld in Sources */,
+				FC2201962879FCF5000C4589 /* GenaricTable.swift in Sources */,
 				FC08C3B2286360CD00703656 /* LastEventsViewModel.swift in Sources */,
 				FC89E2C82861169B00A5FDA3 /* Urls.swift in Sources */,
 				FC89E2C5286104FE00A5FDA3 /* LegsTable.swift in Sources */,
@@ -652,6 +698,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FC091F99287BAA6E0043908A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView";
+			requirement = {
+				kind = exactVersion;
+				version = 5.1.1;
+			};
+		};
+		FC19C00B28A5017700B84027 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FC091F9A287BAA6E0043908A /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC091F99287BAA6E0043908A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
+		};
+		FC091F9C287BAA6E0043908A /* NVActivityIndicatorViewExtended */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC091F99287BAA6E0043908A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorViewExtended;
+		};
+		FC19C00C28A5017700B84027 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC19C00B28A5017700B84027 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		FC19C00E28A5017700B84027 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC19C00B28A5017700B84027 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FC89E2A12860C7A400A5FDA3 /* SportsApp.xcdatamodeld */ = {

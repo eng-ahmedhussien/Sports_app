@@ -7,22 +7,45 @@
 
 import UIKit
 import Alamofire
+import FirebaseFirestore
 class FavoriteTable: UITableViewController {
 
     let reachabilityManager = NetworkReachabilityManager()
     var db1 = DBManager()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var arrayOfFavorite = [CoreLeague]()
+    var arrayOfFavoriteLeagues = [[String:Any]]()
+    let dbb = Firestore.firestore()
+    
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         arrayOfFavorite  =  db1.fetchData(appDelegate: appDelegate)
         tableView.reloadData()
     }
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        loadDataFormFirebase()
         arrayOfFavorite  = db1.fetchData(appDelegate: appDelegate)
         tableView.reloadData()
     }
+
+    func loadDataFormFirebase() {
+        arrayOfFavoriteLeagues = []
+        self.dbb.collection("leaguse").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                DispatchQueue.main.async {
+                    for document in querySnapshot!.documents {
+                        self.arrayOfFavoriteLeagues.append(document.data())
+                         self.tableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
     func checkNetwork(){
         reachabilityManager?.startListening()
         reachabilityManager?.listener = { _ in
@@ -37,6 +60,7 @@ class FavoriteTable: UITableViewController {
             }
         }
     }
+    
     func creatAlert (title:String,message:String){
            let alart = UIAlertController(title: title, message: message, preferredStyle: .alert)
            let okButton = UIAlertAction(title: "ok", style: .default, handler: nil)
@@ -51,18 +75,29 @@ class FavoriteTable: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayOfFavorite.count
+      //  return arrayOfFavorite.count
+        print(arrayOfFavoriteLeagues.count)
+        return arrayOfFavoriteLeagues.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoriteCell", for: indexPath) as? FavoriteCell
-        cell?.leaguename.text = arrayOfFavorite[indexPath.row].name
-        cell?.youtube = arrayOfFavorite[indexPath.row].youtube!
         
-        let url = URL(string: arrayOfFavorite[indexPath.row].image!)!
+        cell?.leaguename.text = arrayOfFavoriteLeagues[indexPath.row]["name"] as! String
+      //  cell?.youtube = arrayOfFavorite[indexPath.row].youtube!
+        
+        let url = URL(string: arrayOfFavoriteLeagues[indexPath.row]["image"] as! String)!
         if let data = try? Data(contentsOf: url) {
             cell!.leagueimage.image = UIImage(data: data)
         }
+//        cell?.leaguename.text = arrayOfFavorite[indexPath.row].name
+//        cell?.youtube = arrayOfFavorite[indexPath.row].youtube!
+//
+//        let url = URL(string: arrayOfFavorite[indexPath.row].image!)!
+//        if let data = try? Data(contentsOf: url) {
+//            cell!.leagueimage.image = UIImage(data: data)
+//        }
+        
         cell!.layer.borderColor = UIColor.black.cgColor
         cell!.layer.borderWidth = 1
         cell?.layer.cornerRadius  = 20
@@ -71,8 +106,8 @@ class FavoriteTable: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let vc = storyboard?.instantiateViewController(withIdentifier: "teamsViewController") as? teamsViewController
+        let vc = UIStoryboard(name: "TeamsView", bundle: nil).instantiateViewController(withIdentifier: "teamsViewController") as? teamsViewController
+       // let vc = storyboard?.instantiateViewController(withIdentifier: "teamsViewController") as? teamsViewController
         reachabilityManager?.startListening()
         reachabilityManager?.listener = { _ in
             if let isNetworkReachable = self.reachabilityManager?.isReachable,

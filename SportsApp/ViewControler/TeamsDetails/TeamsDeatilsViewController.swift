@@ -6,8 +6,7 @@
 //
 
 import UIKit
-
-class TeamsDeatilsViewController: UIViewController {
+ class TeamsDeatilsViewController: UIViewController {
 
 
     @IBOutlet weak var discription: UITextView!
@@ -42,13 +41,6 @@ class TeamsDeatilsViewController: UIViewController {
         if let data = try? Data(contentsOf: url1!) {
             imageTeam.image = UIImage(data: data)
         }
-        
-//        let url2 = URL(string:iback)
-//        if let data = try? Data(contentsOf: url2!) {
-//            imageback.image = UIImage(data: data)
-//        }
-        
-        //iteam
     }
 
     @IBAction func tweter(_ sender: UIButton) {

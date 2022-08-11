@@ -6,20 +6,23 @@
 //
 
 import UIKit
-
+import NVActivityIndicatorView
 class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var leaguesTableView: UITableView!
     var arrayOfLeagues = [League]()
     var arrayOfLeaguesInSport = [League]()
     var arrayOfLeaguesBySport = [Leagu]()
     var sportsName = ""
+    @IBOutlet weak var indecatore: NVActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         leaguesTableView.delegate=self
         leaguesTableView.dataSource=self
         ScreenData1()
-        
+        loadindecatore()
+        //leaguesTableView.register(UINib(nibName: "LeagueCell", bundle: nil), forCellReuseIdentifier: "LeagueCell")
+        leaguesTableView.registerCellNib(cellClass: LeagueCell.self)
         
     }
     func ScreenData1(){
@@ -35,7 +38,6 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
         
         
-        
         let ViewModel =  AllLeagusBySport()
         ViewModel.fetchData(url:"\(URLs.allLeaguesBySport)\(newsportsName)")
        // print("\(URLs.allLeaguesBySport)\(sportsName)")
@@ -43,6 +45,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
             if let allLeague = allLeague {
                 self.arrayOfLeaguesBySport  = allLeague
                 self.leaguesTableView.reloadData()
+                self.indecatore.stopAnimating()
             }
             if let error = error {
                 print(error.localizedDescription)
@@ -70,6 +73,12 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
+    func loadindecatore(){
+        indecatore.color =  .orange
+        indecatore.type = .ballPulseSync
+        indecatore.padding = 150
+        indecatore.startAnimating()
+        }
     // MARK: - Table view data source
 
      func numberOfSections(in tableView: UITableView) -> Int {
@@ -83,7 +92,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath) as? LeagueCell
-         
+         //let cell = tableView.dequeue() as? LeagueCell
          cell?.nameLeague.text = arrayOfLeaguesBySport[indexPath.row].strLeague
          let url = URL(string:arrayOfLeaguesBySport[indexPath.row].strBadge )
          if let data = try? Data(contentsOf: url!) {
@@ -102,7 +111,7 @@ class LegsTable: UIViewController,UITableViewDelegate,UITableViewDataSource {
          return cell!
      }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "teamsViewController") as? teamsViewController
+        let vc = UIStoryboard(name: "TeamsView", bundle: nil).instantiateViewController(withIdentifier: "teamsViewController") as? teamsViewController
         vc?.leaguename = arrayOfLeaguesBySport[indexPath.row].strLeague
         vc?.leagueId = arrayOfLeaguesBySport[indexPath.row].idLeague
         vc?.sportName = arrayOfLeaguesBySport[indexPath.row].strSport

@@ -22,188 +22,140 @@ class NetworkManger:SportsApi{
     
     //MARK: allSports
     func allSports(url: String, completion: @escaping (([Sport]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(AllSports.self, from: data)
-                    if let decodedArray  = decodedArray?.sports{
-                        self.arrayofSports = decodedArray
-                        completion(self.arrayofSports,nil)
+        Alamofire.request(url).responseJSON { response in
+            switch response.result {
+                case .success( _):
+                    guard let data = response.data else{return}
+                    do {
+                        let decodedData = try JSONDecoder().decode(AllSports.self, from:data)
+                        completion(decodedData.sports,nil)
+                    } catch let jsonError {
+                        completion(nil,jsonError)
                     }
-                    else{
-                        print(" arrayofSports nill  ")
-                    }
-                    // print(self.decodedSports.count)
-                    
-                }else{
-                    print("No Data in arrayofSports")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
+
+                case .failure(let error):
+                    completion(nil,error)
             }
         }
+
+
     }
     //MARK: allLeagues
     public func allLeaguesAPI(url: String , completion: @escaping ([League]? , Error?)->Void) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(allLeague.self, from: data)
-                    if let decodedArray  = decodedArray?.leagues{
-                        self.arrayofleagus = decodedArray
-                       // print(self.decodedSports.count)
-                        completion(self.arrayofleagus,nil)
+        Alamofire.request(url).responseJSON { response in
+            switch response.result {
+                case .success( _):
+                    guard let data = response.data else{return}
+                    do {
+                        let decodedData = try JSONDecoder().decode(allLeague.self, from:data)
+                        completion(decodedData.leagues,nil)
+                    } catch let jsonError {
+                        completion(nil,jsonError)
                     }
-                    else{
-                        print(" arrayofleagus nill  ")
-                    }
-                }else{
-                    print("No Data arrayofleagus")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
+
+                case .failure(let error):
+                    completion(nil,error)
             }
+
         }
-        
     }
     //MARK: allLeaguesbySport
     func allLeaguesBySport(url: String, completion: @escaping (([Leagu]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(allLeagu.self, from: data)
-                    if let decodedArray = decodedArray?.countries{
-                        self.arrayofleagusBySport = decodedArray
-                       // print(self.decodedSports.count)
-                        completion(self.arrayofleagusBySport,nil)
-                    }
-                    else{
-                        print("arrayofleagusBySport is nill")
-                    }
-                    
-                }else{
-                    print("No Data")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
-            }
-        }
+        Alamofire.request(url).responseJSON { response in
+                   switch response.result {
+                       case .success( _):
+                           guard let data = response.data else{return}
+                           do {
+                               let decodedData = try JSONDecoder().decode(allLeagu.self, from:data)
+                               completion(decodedData.countries,nil)
+                           } catch let jsonError {
+                               completion(nil,jsonError)
+                           }
+
+                       case .failure(let error):
+                           completion(nil,error)
+                   }
+
+               }
+        
         
     }
     //MARK: allTeams
     func allTeams(url: String, completion: @escaping (([Team]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(Teams.self, from: data)
-                    if let decodedArray = decodedArray?.table{
-                        self.arrayofTeams = decodedArray
-                        completion(self.arrayofTeams,nil)
-                    }
-                    else{
-                        print("arrayofTeams is nil")
-                    }
-                }else{
-                    print("No Data")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
-            }
-        }
+        Alamofire.request(url).responseJSON { response in
+                   switch response.result {
+                       case .success( _):
+                           guard let data = response.data else{return}
+                           do {
+                               let decodedData = try JSONDecoder().decode(Teams.self, from:data)
+                               completion(decodedData.table,nil)
+                           } catch let jsonError {
+                               completion(nil,jsonError)
+                           }
+
+                       case .failure(let error):
+                           completion(nil,error)
+                   }
+
+               }
     }
     //MARK: dictionaryTeam
     func dictionaryTeam(url: String, completion: @escaping (([[String : String?]]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(DictionaryTeam.self, from: data)
-                    if let decodedArray = decodedArray?.teams{
-                        self.arrayofDicTeams = decodedArray
-                        completion(self.arrayofDicTeams,nil)
-                    }
-                    else{
-                        print("arrayofDicTeams nill")
-                    }
-                    
-                }else{
-                    print("No Data")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
-            }
-        }
+        Alamofire.request(url).responseJSON { response in
+                   switch response.result {
+                       case .success( _):
+                           guard let data = response.data else{return}
+                           do {
+                               let decodedData = try JSONDecoder().decode(DictionaryTeam.self, from:data)
+                               completion(decodedData.teams,nil)
+                           } catch let jsonError {
+                               completion(nil,jsonError)
+                           }
+
+                       case .failure(let error):
+                           completion(nil,error)
+                   }
+
+               }
     }
     //MARK: UpcomingEvents
     func UpcomingEvents(url: String, completion: @escaping (([[String : String?]]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(Upcoming.self, from: data)
-                    if let decodedArray = decodedArray?.events{
-                        self.arrayofEvents = decodedArray
-                        completion(self.arrayofEvents,nil)
-                    }
-                    else{
-                        print("No upcoming events")
-                    }
-                    
-                }else{
-                    print("No Data")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
-            }
-        }
+        Alamofire.request(url).responseJSON { response in
+                   switch response.result {
+                       case .success( _):
+                           guard let data = response.data else{return}
+                           do {
+                               let decodedData = try JSONDecoder().decode(Upcoming.self, from:data)
+                               completion(decodedData.events,nil)
+                           } catch let jsonError {
+                               completion(nil,jsonError)
+                           }
+
+                       case .failure(let error):
+                           completion(nil,error)
+                   }
+
+               }
     }
     //MARK: lastEvents
     func lastEvents(url: String, completion: @escaping (([[String: String?]]?, Error?) -> Void)) {
-        Alamofire.request(url).validate().responseJSON { response in
-            if response.result.isSuccess
-            {
-                if let data = response.data{
-                    let decoder = JSONDecoder()
-                    let decodedArray = try? decoder.decode(Welcome.self, from: data)
-                    if let  decodedArray = decodedArray{
-                         self.arrayofLastEvents = decodedArray.events
-                         print("arrayofLastEvents  found")
-                        completion(self.arrayofLastEvents,nil)
-                    }
-                    else{
-                        print( url)
-                        print(" arrayofLastEvents not found")
-                    }
-                   
-                }else{
-                    print("No Data")
-                    return
-                }
-            }else{
-                print("error \(String(describing:response.result.error))")
-            }
-        }
-    }
-    
-    
-    
-    
-    
+        Alamofire.request(url).responseJSON { response in
+                   switch response.result {
+                       case .success( _):
+                           guard let data = response.data else{return}
+                           do {
+                               let decodedData = try JSONDecoder().decode(Welcome.self, from:data)
+                               completion(decodedData.events,nil)
+                           } catch let jsonError {
+                               completion(nil,jsonError)
+                           }
+
+                       case .failure(let error):
+                           completion(nil,error)
+                   }
+
+               }
+       
 }
     
+}
